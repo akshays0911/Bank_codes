@@ -1,0 +1,368 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>zeromean</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-11-20"><meta name="DC.source" content="zeromean.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">QUESTION 1</a></li><li><a href="#2">ANSWER 1</a></li><li><a href="#3">QUESTION 2</a></li><li><a href="#4">ANSWER 2</a></li><li><a href="#5">QUESTION 3</a></li><li><a href="#6">ANSWER3</a></li><li><a href="#7">QUESTION 4</a></li><li><a href="#8">ANSWER 4</a></li><li><a href="#9">QUESTION 5</a></li><li><a href="#10">ANSWER 5</a></li><li><a href="#11">QUESTION 6</a></li><li><a href="#12">ANSWER 6</a></li><li><a href="#13">QUESTION 7</a></li><li><a href="#14">ANSWER 7</a></li><li><a href="#15">QUESTION 8</a></li><li><a href="#16">ANSWER 8</a></li></ul></div><h2 id="1">QUESTION 1</h2><pre class="codeinput"><span class="comment">% Please download the ?rawdata.mat? data file attached in this homework (click the link to get the</span>
+<span class="comment">% file). The rawdata matrix in this data file represents 512 vectors in a 1024-dimensional vector</span>
+<span class="comment">% space. This data set is generated so that the vectors actually reside in a much-lower dimensional</span>
+<span class="comment">% subspace: More specifically, the data that lives in a low-dimensional subspace and then a certain</span>
+<span class="comment">% amount of noise are added ? so the data in rawdata is just approximately low-dimensional.</span>
+<span class="comment">% Begin by writing a function to zero-mean the data. That is, write a function that shifts the</span>
+<span class="comment">% vectors so that the mean of the data in each dimension is zero. Use it to zero-mean rawdata.</span>
+<span class="comment">% Use a different name, as you will still need the non-zero-mean version of rawdata in the future.</span>
+</pre><h2 id="2">ANSWER 1</h2><pre class="codeinput">load <span class="string">'rawdata.mat'</span>;
+raw_zero = reshape(zscore(rawdata(:)),size(rawdata,1),size(rawdata,2)); <span class="comment">%Calculates the zero mean of the raw data</span>
+</pre><h2 id="3">QUESTION 2</h2><pre class="codeinput"><span class="comment">% Compute the covariance matrix for both rawdata and its zero-mean version. You may use the</span>
+<span class="comment">% MATLAB function cov. Plot the matrices and their difference to demonstrate that zero-meaning</span>
+<span class="comment">% the data does not affect the covariance. (Pro tips: Use imagesc to display the matrix and it will</span>
+<span class="comment">% scale the color map appropriately. Use colormap gray to get a color map that gives a smooth</span>
+<span class="comment">% variation in color with value. Use colorbar to place a scale next to the image.)</span>
+</pre><h2 id="4">ANSWER 2</h2><pre class="codeinput">cov_rawdata = cov(rawdata);       <span class="comment">%Covariance of the raw data</span>
+cov_raw_zero = cov(raw_zero);     <span class="comment">%Covariance of the zero mean data</span>
+figure(1);
+imagesc(cov_rawdata);             <span class="comment">%Plotting the covariance raw data</span>
+colorbar;
+colormap <span class="string">'gray'</span>;
+title(<span class="string">'COVARIANCE GRAPH OF RAW DATA MATRIX'</span>);
+figure(2);
+imagesc(cov_raw_zero);            <span class="comment">%Plotting the covariance zero mean data</span>
+colorbar;
+colormap <span class="string">'gray'</span>;
+title(<span class="string">'(COVARIANCE GRAPH OF ZERO MEAN MATRIX'</span>);
+figure(3);
+imagesc(cov_rawdata-cov_raw_zero); <span class="comment">%Plotting the covariance of the Difference</span>
+colorbar;
+colormap <span class="string">'gray'</span>;
+title(<span class="string">'COVARIANCE GRAPH OF THE DIFFERENCE BETWEEN RAW DATA AND ZERO MEAN'</span>);
+</pre><img vspace="5" hspace="5" src="zeromean_01.png" alt=""> <img vspace="5" hspace="5" src="zeromean_02.png" alt=""> <img vspace="5" hspace="5" src="zeromean_03.png" alt=""> <h2 id="5">QUESTION 3</h2><pre class="codeinput"><span class="comment">% Compute the principal components by finding the eigen-decomposition of your zero-mean covariance</span>
+<span class="comment">% matrix. Use the MATLAB function eig. Sort the eigenvalues from largest to smallest (and</span>
+<span class="comment">% sort the eigenvectors as well). (Pro tip: Use the [vals index] = sort(numbers, ?descend?)</span>
+<span class="comment">% version of the sort command to get a sorted list of indices that you can use to sort the eigenvectors.).</span>
+<span class="comment">% Make two plots of the eigenvalues (linear and semilog). Use this information to infer</span>
+<span class="comment">% the dimension of the low-dimensional subspace that the data approximately resides in.</span>
+</pre><h2 id="6">ANSWER3</h2><pre class="codeinput">[E_zeromean_var_vec,E_zeromean_var_val] = eig(cov_raw_zero);  <span class="comment">%Finding out the Eigen Vlaues and Eigen Vectors</span>
+E_diag = diag(E_zeromean_var_val);
+E_val_sorted = sort(E_diag,<span class="string">'descend'</span>);                        <span class="comment">%Sorting the Eigen Values in Descending Order</span>
+A = size(E_zeromean_var_vec);
+[B A] = sort(E_zeromean_var_vec,<span class="string">'descend'</span>);                   <span class="comment">%Sorting the Eigen Vectors in Descending Order</span>
+figure(4);
+plot(E_val_sorted);
+title(<span class="string">'Linear plot of the EigenValues'</span>);                      <span class="comment">%Plotting the sorted Eigen Values</span>
+figure(5);
+semilogx(E_val_sorted);
+title(<span class="string">'SemiLog plot of the EigenValues'</span>);                     <span class="comment">%Plotting the sorted Eigen Vectors</span>
+</pre><img vspace="5" hspace="5" src="zeromean_04.png" alt=""> <img vspace="5" hspace="5" src="zeromean_05.png" alt=""> <h2 id="7">QUESTION 4</h2><pre class="codeinput"><span class="comment">% Now we ere going to compute the principal components via singular-value decomposition (SVD).</span>
+<span class="comment">% Use the MATLAB svd command to decompose the zero-mean data into U, S, and V matrices.</span>
+<span class="comment">% Make two plots of the singular values (linear and semilog). Use this information to infer the</span>
+<span class="comment">% dimension of the low-dimensional subspace that the data approximately resides in. Compare</span>
+<span class="comment">% with the answer you found earlier.</span>
+</pre><h2 id="8">ANSWER 4</h2><pre class="codeinput">[U,E_singular,V] = svd(raw_zero);                            <span class="comment">%Singular Value Decomposition of raw zero data</span>
+E_singular_diag = diag(E_singular);
+figure(6);
+plot(E_singular_diag);                                       <span class="comment">%Plotting(LINEAR) the singular value from SVD</span>
+title(<span class="string">'Linear plot of the Singular values'</span>);
+figure(7);
+semilogx(E_singular_diag);                                   <span class="comment">%Plotting(SEMILOG) the singular value from SVD</span>
+title(<span class="string">'SemiLog plot of the Singular EigenValues'</span>);
+</pre><img vspace="5" hspace="5" src="zeromean_06.png" alt=""> <img vspace="5" hspace="5" src="zeromean_07.png" alt=""> <h2 id="9">QUESTION 5</h2><pre class="codeinput"><span class="comment">% Compare the principal components found by taking the eigenvectors of the covariance matrix</span>
+<span class="comment">% (in Subproblem 3) with the ones found in the matrix V of the SVD (in Subproblem 4). Plot the</span>
+<span class="comment">% difference of the two matrices. Comment on the differences.</span>
+</pre><h2 id="10">ANSWER 5</h2><pre class="codeinput">figure(8);
+imagesc(E_zeromean_var_vec-V);               <span class="comment">%Plotting the Difference between the zero mean variance and V from SVD</span>
+colorbar;
+colormap <span class="string">'gray'</span>;
+title(<span class="string">'Difference between Eigen vectors in covariance matrix and V from Singular Value Decomposition'</span>);
+</pre><img vspace="5" hspace="5" src="zeromean_08.png" alt=""> <h2 id="11">QUESTION 6</h2><pre class="codeinput"><span class="comment">% Now we are going to use the MATLAB function princomp to compute the principal components.</span>
+<span class="comment">% This time, use the non-zero-meaned data (princomp takes care of that detail for you). Plot the</span>
+<span class="comment">% score matrix returned by princomp. This matrix gives the expansion coefficients for the data in</span>
+<span class="comment">% the principal component basis. Comment on the structure you see.</span>
+</pre><h2 id="12">ANSWER 6</h2><pre class="codeinput">[Coeff_raw_data,Score_raw_data] = princomp(rawdata);   <span class="comment">%Doing the PCA of the raw data</span>
+figure(9);
+imagesc(Score_raw_data);                               <span class="comment">%Plotting the score from tbe PCA</span>
+colorbar;
+colormap <span class="string">gray</span>;
+title(<span class="string">'Score Matrix from principal components'</span>);
+<span class="comment">% Have to comment on the structure</span>
+</pre><pre class="codeoutput">Warning: princomp will be removed in a future release. Use pca instead. 
+</pre><img vspace="5" hspace="5" src="zeromean_09.png" alt=""> <h2 id="13">QUESTION 7</h2><pre class="codeinput"><span class="comment">% Following up on the lead from the subproblem above, compute the mean of the absolute value of</span>
+<span class="comment">% the elements in each column of score. Make two plots of this information (linear and semilog).</span>
+<span class="comment">% Use this information to infer the dimension of the low-dimensional subspace that the data</span>
+<span class="comment">% approximately resides in.</span>
+</pre><h2 id="14">ANSWER 7</h2><pre class="codeinput">Score_abs = abs(Score_raw_data);
+Score_mean = mean(Score_abs);                       <span class="comment">%Mean of the score raw data</span>
+figure(10);
+plot(Score_mean);                                   <span class="comment">%Plotting(LINEAR) of the score mean</span>
+title(<span class="string">'Linear Plot of mean of Score Values'</span>);
+figure(11);
+semilogx(Score_mean);                               <span class="comment">%Plotting(SEMILOG) of the score mean</span>
+title(<span class="string">'Semilog Plot of mean of Score Values'</span>);
+</pre><img vspace="5" hspace="5" src="zeromean_10.png" alt=""> <img vspace="5" hspace="5" src="zeromean_11.png" alt=""> <h2 id="15">QUESTION 8</h2><pre class="codeinput"><span class="comment">% Now compare the principal components found via svd and princomp. Plot the difference of the</span>
+<span class="comment">% two matrices. Now compare the difference in the expansion coefficients. In the svd version, this</span>
+<span class="comment">% will be the product US. Compute the difference of the two matrices. Comment on the results.</span>
+</pre><h2 id="16">ANSWER 8</h2><pre class="codeinput">Signum_V = sign(V(1,:));
+Signum_Coeff_raw_data = sign(Coeff_raw_data(1,:));
+Signum_common = repmat(Signum_V.*Signum_Coeff_raw_data,[1024,1]);
+V_final = Signum_common.*V;
+figure(12);
+imagesc(V_final - Coeff_raw_data);
+title(<span class="string">'Difference in Principal Components'</span>);
+colorbar;
+colormap <span class="string">'gray'</span>;
+SVD_princomp = U*E_singular;
+PCA_princomp = Score_raw_data;
+Signum_SVD_princomp = sign(SVD_princomp(1,:));
+Signum_PCA_princomp = sign(PCA_princomp(1,:));
+Signum_common_2 = Signum_SVD_princomp.*Signum_PCA_princomp;
+SVD_princomp_final = Signum_common_2.*SVD_princomp;
+figure(13);
+imagesc(SVD_princomp_final - PCA_princomp);
+title(<span class="string">'Difference in expansion Coeffecients'</span>);
+colorbar;
+colormap <span class="string">'gray'</span>;
+</pre><img vspace="5" hspace="5" src="zeromean_12.png" alt=""> <img vspace="5" hspace="5" src="zeromean_13.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% QUESTION 1
+
+% Please download the ?rawdata.mat? data file attached in this homework (click the link to get the
+% file). The rawdata matrix in this data file represents 512 vectors in a 1024-dimensional vector
+% space. This data set is generated so that the vectors actually reside in a much-lower dimensional
+% subspace: More specifically, the data that lives in a low-dimensional subspace and then a certain
+% amount of noise are added ? so the data in rawdata is just approximately low-dimensional.
+% Begin by writing a function to zero-mean the data. That is, write a function that shifts the
+% vectors so that the mean of the data in each dimension is zero. Use it to zero-mean rawdata.
+% Use a different name, as you will still need the non-zero-mean version of rawdata in the future.
+
+%% ANSWER 1
+
+load 'rawdata.mat';            
+raw_zero = reshape(zscore(rawdata(:)),size(rawdata,1),size(rawdata,2)); %Calculates the zero mean of the raw data
+
+%% QUESTION 2
+
+% Compute the covariance matrix for both rawdata and its zero-mean version. You may use the
+% MATLAB function cov. Plot the matrices and their difference to demonstrate that zero-meaning
+% the data does not affect the covariance. (Pro tips: Use imagesc to display the matrix and it will
+% scale the color map appropriately. Use colormap gray to get a color map that gives a smooth
+% variation in color with value. Use colorbar to place a scale next to the image.)
+
+%% ANSWER 2
+
+cov_rawdata = cov(rawdata);       %Covariance of the raw data
+cov_raw_zero = cov(raw_zero);     %Covariance of the zero mean data
+figure(1);
+imagesc(cov_rawdata);             %Plotting the covariance raw data
+colorbar;                          
+colormap 'gray';
+title('COVARIANCE GRAPH OF RAW DATA MATRIX');
+figure(2);
+imagesc(cov_raw_zero);            %Plotting the covariance zero mean data
+colorbar;
+colormap 'gray';
+title('(COVARIANCE GRAPH OF ZERO MEAN MATRIX');
+figure(3);
+imagesc(cov_rawdata-cov_raw_zero); %Plotting the covariance of the Difference
+colorbar;
+colormap 'gray';       
+title('COVARIANCE GRAPH OF THE DIFFERENCE BETWEEN RAW DATA AND ZERO MEAN');
+
+%% QUESTION 3
+
+% Compute the principal components by finding the eigen-decomposition of your zero-mean covariance
+% matrix. Use the MATLAB function eig. Sort the eigenvalues from largest to smallest (and
+% sort the eigenvectors as well). (Pro tip: Use the [vals index] = sort(numbers, ?descend?)
+% version of the sort command to get a sorted list of indices that you can use to sort the eigenvectors.).
+% Make two plots of the eigenvalues (linear and semilog). Use this information to infer
+% the dimension of the low-dimensional subspace that the data approximately resides in.
+
+%% ANSWER3
+
+[E_zeromean_var_vec,E_zeromean_var_val] = eig(cov_raw_zero);  %Finding out the Eigen Vlaues and Eigen Vectors
+E_diag = diag(E_zeromean_var_val);
+E_val_sorted = sort(E_diag,'descend');                        %Sorting the Eigen Values in Descending Order
+A = size(E_zeromean_var_vec);
+[B A] = sort(E_zeromean_var_vec,'descend');                   %Sorting the Eigen Vectors in Descending Order
+figure(4);
+plot(E_val_sorted);
+title('Linear plot of the EigenValues');                      %Plotting the sorted Eigen Values
+figure(5);
+semilogx(E_val_sorted);
+title('SemiLog plot of the EigenValues');                     %Plotting the sorted Eigen Vectors
+
+%% QUESTION 4
+
+% Now we ere going to compute the principal components via singular-value decomposition (SVD).
+% Use the MATLAB svd command to decompose the zero-mean data into U, S, and V matrices.
+% Make two plots of the singular values (linear and semilog). Use this information to infer the
+% dimension of the low-dimensional subspace that the data approximately resides in. Compare
+% with the answer you found earlier.
+
+%% ANSWER 4
+
+[U,E_singular,V] = svd(raw_zero);                            %Singular Value Decomposition of raw zero data
+E_singular_diag = diag(E_singular);
+figure(6);
+plot(E_singular_diag);                                       %Plotting(LINEAR) the singular value from SVD
+title('Linear plot of the Singular values'); 
+figure(7);
+semilogx(E_singular_diag);                                   %Plotting(SEMILOG) the singular value from SVD                               
+title('SemiLog plot of the Singular EigenValues');
+
+%% QUESTION 5
+
+% Compare the principal components found by taking the eigenvectors of the covariance matrix
+% (in Subproblem 3) with the ones found in the matrix V of the SVD (in Subproblem 4). Plot the
+% difference of the two matrices. Comment on the differences.
+
+%% ANSWER 5
+
+figure(8);
+imagesc(E_zeromean_var_vec-V);               %Plotting the Difference between the zero mean variance and V from SVD
+colorbar;
+colormap 'gray';
+title('Difference between Eigen vectors in covariance matrix and V from Singular Value Decomposition');
+
+%% QUESTION 6
+
+% Now we are going to use the MATLAB function princomp to compute the principal components.
+% This time, use the non-zero-meaned data (princomp takes care of that detail for you). Plot the
+% score matrix returned by princomp. This matrix gives the expansion coefficients for the data in
+% the principal component basis. Comment on the structure you see.
+
+%% ANSWER 6
+
+[Coeff_raw_data,Score_raw_data] = princomp(rawdata);   %Doing the PCA of the raw data 
+figure(9);
+imagesc(Score_raw_data);                               %Plotting the score from tbe PCA
+colorbar;
+colormap gray;                
+title('Score Matrix from principal components');
+% Have to comment on the structure
+
+%% QUESTION 7
+
+% Following up on the lead from the subproblem above, compute the mean of the absolute value of
+% the elements in each column of score. Make two plots of this information (linear and semilog).
+% Use this information to infer the dimension of the low-dimensional subspace that the data
+% approximately resides in.
+
+%% ANSWER 7
+
+Score_abs = abs(Score_raw_data);
+Score_mean = mean(Score_abs);                       %Mean of the score raw data
+figure(10); 
+plot(Score_mean);                                   %Plotting(LINEAR) of the score mean     
+title('Linear Plot of mean of Score Values');
+figure(11);
+semilogx(Score_mean);                               %Plotting(SEMILOG) of the score mean
+title('Semilog Plot of mean of Score Values');
+
+%% QUESTION 8
+
+% Now compare the principal components found via svd and princomp. Plot the difference of the
+% two matrices. Now compare the difference in the expansion coefficients. In the svd version, this
+% will be the product US. Compute the difference of the two matrices. Comment on the results.
+
+%% ANSWER 8
+
+Signum_V = sign(V(1,:));
+Signum_Coeff_raw_data = sign(Coeff_raw_data(1,:));
+Signum_common = repmat(Signum_V.*Signum_Coeff_raw_data,[1024,1]);
+V_final = Signum_common.*V;
+figure(12);
+imagesc(V_final - Coeff_raw_data);
+title('Difference in Principal Components');
+colorbar;
+colormap 'gray';
+SVD_princomp = U*E_singular;
+PCA_princomp = Score_raw_data;
+Signum_SVD_princomp = sign(SVD_princomp(1,:));
+Signum_PCA_princomp = sign(PCA_princomp(1,:));
+Signum_common_2 = Signum_SVD_princomp.*Signum_PCA_princomp;
+SVD_princomp_final = Signum_common_2.*SVD_princomp;
+figure(13);
+imagesc(SVD_princomp_final - PCA_princomp);
+title('Difference in expansion Coeffecients');
+colorbar;
+colormap 'gray';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
